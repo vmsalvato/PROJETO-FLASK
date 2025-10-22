@@ -12,31 +12,12 @@ CREATE TABLE IF NOT EXISTS alunos (
     cpf TEXT NOT NULL
 );
 """
-
 CREATE_TABLE_USUARIOS_SQL = """
 CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usuario TEXT NOT NULL,
     senha TEXT NOT NULL,
     ativo INTEGER NOT NULL
-);
-"""
-
-CREATE_TABLE_PROFESSORES_SQL = """
-CREATE TABLE IF NOT EXISTS professores (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    idade INTEGER NOT NULL,
-    formacao TEXT NOT NULL
-);
-"""
-
-CREATE_TABLE_MATERIAS_SQL = """
-CREATE TABLE IF NOT EXISTS materias (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    sigla_curricular TEXT NOT NULL,
-    descricao TEXT NOT NULL
 );
 """
 
@@ -60,8 +41,6 @@ def init_db():
     # Criar tabela
     cursor.execute(CREATE_TABLE_ALUNOS_SQL)
     cursor.execute(CREATE_TABLE_USUARIOS_SQL)
-    cursor.execute(CREATE_TABLE_PROFESSORES_SQL)
-    cursor.execute(CREATE_TABLE_MATERIAS_SQL)
 
     # Inserir dados iniciais só se tabela estiver vazia: alunos
     cursor.execute("SELECT COUNT(*) FROM alunos;")
