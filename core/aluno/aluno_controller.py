@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from core.aluno.aluno_service import AlunoService
 from core.aluno.aluno import Aluno
 from core.autenticacao.autenticacao import autenticacao
+from core.validador.validador import validar_dados
 
 aluno_service = AlunoService()
 
@@ -13,10 +14,17 @@ def listar_alunos():
     alunos = aluno_service.listar_alunos()
     return jsonify(alunos)
 
+
+
 @aluno_controller.route('/', methods=['POST'])
 @autenticacao
 def adicionar_aluno():
     dados = request.get_json()
+
+    result = validar_dados(dados["cpf"], dados["nome"], dados["idade"])
+    if result != True:
+        return jsonify(result), 400
+
     obj_aluno =  Aluno(id=0, nome=dados["nome"], idade=dados["idade"], cpf=dados["cpf"])
     aluno_service.adicionar_aluno(obj_aluno)
     return jsonify(aluno), 201
